@@ -1,0 +1,31 @@
+# .github/workflows/cache-workflow.yml
+name: Dependency Cache Test
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Cache dependencies
+        id: cache-step
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip  # Change this to your dependency cache path
+          key: cache-c1c185c
+
+      - name: prime-cache-c1c185c
+        run: |
+          if [ -n "${{ steps.cache-step.outputs.cache-hit }}" ]; then
+            echo "Cache hit"
+          else
+            echo "Cache miss"
+          fi

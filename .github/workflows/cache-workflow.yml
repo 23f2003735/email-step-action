@@ -1,4 +1,3 @@
-# .github/workflows/cache-workflow.yml
 name: Dependency Cache Test
 
 on:
@@ -19,12 +18,12 @@ jobs:
         id: cache-step
         uses: actions/cache@v4
         with:
-          path: ~/.cache/pip  # Change this to your dependency cache path
+          path: ~/.cache/pip   # change to your dependency folder
           key: cache-c1c185c
 
       - name: prime-cache-c1c185c
         run: |
-          if [ -n "${{ steps.cache-step.outputs.cache-hit }}" ]; then
+          if [ "${{ steps.cache-step.outputs.cache-hit }}" == "true" ]; then
             echo "Cache hit"
           else
             echo "Cache miss"
